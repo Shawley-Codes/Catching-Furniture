@@ -5,10 +5,6 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     public GameTracker GT;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,9 +16,4 @@ public class Collectable : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
