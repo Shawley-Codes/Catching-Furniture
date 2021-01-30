@@ -1188,6 +1188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength: 1000
+  magnetSound: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &1849715538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,6 +1516,7 @@ GameObject:
   - component: {fileID: 2096407225}
   - component: {fileID: 2096407224}
   - component: {fileID: 2096407228}
+  - component: {fileID: 2096407229}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Collectable
@@ -1608,6 +1611,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GT: {fileID: 48765134}
+--- !u!114 &2096407229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096407223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8162c2b3520f23943b6ae36047760c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mangnetizeable: 0
+  Blue: 0
+  Red: 0
+  Collectable: 1
 --- !u!1001 &2112805999
 PrefabInstance:
   m_ObjectHideFlags: 0
