@@ -5,15 +5,16 @@ using UnityEngine;
 public class Magnet : MonoBehaviour {
   public float strength = 1000;
   public AudioSource magnetSound;
+  public GameObject player;
+
   float origVolume;
   float stopAfter = 0.2f;
 
   List<GameObject> reds = new List<GameObject>();
   List<GameObject> blues = new List<GameObject>();
-  GameObject player;
+  
   void Start() {
     origVolume = magnetSound.volume;
-    player = GameObject.Find("Player");
     for (int i = 0; i < transform.childCount; ++i) {
       GameObject obj = transform.GetChild(i).gameObject;
       if (obj.name.StartsWith("Blue")) blues.Add(obj);
