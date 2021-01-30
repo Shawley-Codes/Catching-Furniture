@@ -23,8 +23,16 @@ public class Magnet : MonoBehaviour {
   }
 
   void FixedUpdate() {
-    foreach (var obj in reds) obj.GetComponent<Rigidbody>().isKinematic = true;
-    foreach (var obj in blues) obj.GetComponent<Rigidbody>().isKinematic = true;
+    foreach (var obj in reds) {
+      obj.GetComponent<Rigidbody>().useGravity = true;
+      obj.GetComponent<Rigidbody>().isKinematic = false;
+      obj.layer = 0;
+    }
+    foreach (var obj in blues) {
+      obj.GetComponent<Rigidbody>().useGravity = true;
+      obj.GetComponent<Rigidbody>().isKinematic = false;
+      obj.layer = 0;
+    }
 
     List<GameObject> toPull = null;
     if (Input.GetKey(KeyCode.Alpha1)) toPull = reds;
@@ -44,15 +52,19 @@ public class Magnet : MonoBehaviour {
     }
     stopAfter = 0.2f;
     foreach (GameObject obj in toPull) {
+      obj.layer = 8;
       var rb = obj.GetComponent<Rigidbody>();
       rb.isKinematic = false;
-      var dir = (player.transform.position - obj.transform.position).normalized;
-      float dist = (player.transform.position - obj.transform.position).magnitude;
+      rb.useGravity = false;
+      var source = player.transform.position + Vector3.up;
+      var dir = (source - obj.transform.position).normalized;
+      float dist = (source - obj.transform.position).magnitude;
       if (dist < 3) {
-        rb.isKinematic = true;
+        // rb.isKinematic = true;
       } else {
-        rb.AddForce(dir * strength, ForceMode.Acceleration);
+        
       }
+      rb.AddForce(dir * strength, ForceMode.Acceleration);
     }
   }
 }
