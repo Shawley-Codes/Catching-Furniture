@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Magnet : MonoBehaviour {
-  public float strength = 10;
+  public float strength = 1000;
+  public AudioSource magnetSound;
+  float origVolume;
+  float stopAfter = 0.2f;
+
   List<GameObject> reds = new List<GameObject>();
   List<GameObject> blues = new List<GameObject>();
   GameObject player;
   void Start() {
+    origVolume = magnetSound.volume;
     player = GameObject.Find("Player");
     for (int i = 0; i < transform.childCount; ++i) {
       GameObject obj = transform.GetChild(i).gameObject;
@@ -21,10 +26,22 @@ public class Magnet : MonoBehaviour {
     foreach (var obj in blues) obj.GetComponent<Rigidbody>().isKinematic = true;
 
     List<GameObject> toPull = null;
-    if (Input.GetKey(KeyCode.Alpha1)) { Debug.Log("1"); toPull = reds; }
+    if (Input.GetKey(KeyCode.Alpha1)) toPull = reds;
     if (Input.GetKey(KeyCode.Alpha2)) toPull = blues;
 
-    if (toPull == null) return;
+    if (toPull == null) {
+      stopAfter -= Time.fixedDeltaTime;
+      magnetSound.volume *= 0.9f;
+      if (stopAfter < 0) magnetSound.Stop();
+      return;
+    }
+    if (magnetSound.volume < origVolume) {
+      magnetSound.volume = origVolume;
+    }
+    if (!magnetSound.isPlaying) {
+      magnetSound.Play();
+    }
+    stopAfter = 0.2f;
     foreach (GameObject obj in toPull) {
       var rb = obj.GetComponent<Rigidbody>();
       rb.isKinematic = false;
