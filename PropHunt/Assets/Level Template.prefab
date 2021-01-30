@@ -105,8 +105,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3222709336968379437}
-  m_LocalRotation: {x: -0.08698804, y: 0.8985308, z: -0.2073635, w: -0.37692967}
-  m_LocalPosition: {x: 1.8836927, y: 10.8906, z: 17.16183}
+  m_LocalRotation: {x: -0.1148085, y: 0.880295, z: -0.27230605, w: -0.37114576}
+  m_LocalPosition: {x: 5.056258, y: 16.05, z: 21.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8707319702843254336}
@@ -841,7 +841,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8707319701563575307}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -33.1, y: 3.9, z: 5.5}
+  m_LocalPosition: {x: -33.1, y: 4.85, z: 5.5}
   m_LocalScale: {x: 3, y: 2, z: 5}
   m_Children: []
   m_Father: {fileID: 8707319702843254336}
@@ -2222,7 +2222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2db4782a1cda845a8ec76b4147de55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 50
+  strength: 25
+  yOffset: 3
   magnetSound: {fileID: 8707319702843254338}
   player: {fileID: 8707319702294636895}
 --- !u!82 &8707319702843254338

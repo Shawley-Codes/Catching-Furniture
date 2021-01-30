@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Magnet : MonoBehaviour {
   public float strength = 1000;
+  public float yOffset = 2f;
   public AudioSource magnetSound;
   public GameObject player;
 
@@ -56,7 +57,7 @@ public class Magnet : MonoBehaviour {
       var rb = obj.GetComponent<Rigidbody>();
       rb.isKinematic = false;
       rb.useGravity = false;
-      var source = player.transform.position + Vector3.up;
+      var source = player.transform.position + yOffset * Vector3.up;
       var dir = (source - obj.transform.position).normalized;
       float dist = (source - obj.transform.position).magnitude;
       if (dist < 3) {
