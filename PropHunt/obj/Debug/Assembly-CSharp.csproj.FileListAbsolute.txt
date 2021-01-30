@@ -1,0 +1,2 @@
+C:\Users\iamul\OneDrive\Documents\GitHub\GGJ2021\PropHunt\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\iamul\OneDrive\Documents\GitHub\GGJ2021\PropHunt\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
