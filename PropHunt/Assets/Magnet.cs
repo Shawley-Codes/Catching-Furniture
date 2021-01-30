@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Magnet : MonoBehaviour {
+  public static Magnet instance;
   public float strength = 1000;
   public float yOffset = 2f;
+  public int currentColor = -1;
   public AudioSource magnetSound;
   public GameObject player;
 
@@ -14,6 +16,10 @@ public class Magnet : MonoBehaviour {
   List<GameObject> reds = new List<GameObject>();
   List<GameObject> blues = new List<GameObject>();
   
+  void Awake() {
+    instance = this;
+  }
+
   void Start() {
     origVolume = magnetSound.volume;
     for (int i = 0; i < transform.childCount; ++i) {
@@ -21,6 +27,10 @@ public class Magnet : MonoBehaviour {
       if (obj.name.StartsWith("Blue")) blues.Add(obj);
       if (obj.name.StartsWith("Red")) reds.Add(obj);
     }
+  }
+
+  public void SetColor(int id) {
+    currentColor = id;
   }
 
   void FixedUpdate() {
@@ -36,8 +46,8 @@ public class Magnet : MonoBehaviour {
     }
 
     List<GameObject> toPull = null;
-    if (Input.GetKey(KeyCode.Alpha1)) toPull = reds;
-    if (Input.GetKey(KeyCode.Alpha2)) toPull = blues;
+    if (currentColor == 1) toPull = reds;
+    if (currentColor == 0) toPull = blues;
 
     if (toPull == null) {
       stopAfter -= Time.fixedDeltaTime;
