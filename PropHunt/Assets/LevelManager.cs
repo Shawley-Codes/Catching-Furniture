@@ -51,24 +51,24 @@ public class LevelManager : MonoBehaviour {
         if (targetObject.GetComponent<Rigidbody>().velocity.magnitude < 0.1 || cheatNext) {
           collected++;
           collectSound.Play();
-          Debug.Log("Collected " + collected + " / " + toCollect.Length);
-          UiManager.instance.UpdateCount(collected);
+          // Debug.Log("Collected " + collected + " / " + toCollect.Length);
+          UiManager.instance.UpdateCount(collected, toCollect.Length);
           if (collected >= toCollect.Length) {
             UiManager.instance.setObjective("You Won");
             UiManager.instance.ShowVictory();
           }
           NextCollectible();
         } else {
-          Debug.Log("Release highlighted object");
-          UiManager.instance.setObjective("Let highlighted object settle on the floor.");
+          // Debug.Log("Release highlighted object");
+          UiManager.instance.setObjective("Let highlighted object settle on the floor");
         }
       } else {
         UiManager.instance.setObjective("Remove Non-Highlighed Objects");
-        Debug.Log("Push non-highlighted objects outside the room.");
+        // Debug.Log("Push non-highlighted objects outside the room.");
       }
     } else {
       UiManager.instance.setObjective("Bring Highlighted Object");
-      Debug.Log("Push highlighted object into the room.");
+      // Debug.Log("Push highlighted object into the room.");
     }
     cheatNext = false;
   }

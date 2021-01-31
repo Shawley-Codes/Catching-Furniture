@@ -43,7 +43,6 @@ public class Magnetizable : MonoBehaviour {
       o.enabled = outline;
     }
     colors = LevelManager.instance.AssignColor(renderers.Count);
-    if (colors != null) Debug.Log(colors.Count);
     if (colors == null || colors.Count != renderers.Count) {
       gameObject.SetActive(false);
       return;

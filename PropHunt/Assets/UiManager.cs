@@ -23,9 +23,8 @@ public class UiManager : MonoBehaviour {
         victoryScreen.SetActive(true);
     }
 
-    public void UpdateCount(int collected){
-        //change tmp to provided int
-        count.text = collected.ToString();
+    public void UpdateCount(int collected, int total){
+      count.text = collected + " / " + total;
     }
 
     public void setObjective(String newObj)
