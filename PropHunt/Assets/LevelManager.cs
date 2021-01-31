@@ -24,8 +24,9 @@ public class LevelManager : MonoBehaviour {
 
   void Awake() {
     instance = this;
-    currentLevel = Instantiate(templatePrefab);
     templatePrefab.SetActive(false);
+    RestartLevel();
+    // currentLevel = Instantiate(templatePrefab
   }
 
   void Shuffle<T>(List<T> v) {
@@ -41,8 +42,8 @@ public class LevelManager : MonoBehaviour {
     var oldLevel = currentLevel;
     currentLevel = Instantiate(templatePrefab);
     currentLevel.SetActive(true);
-    Destroy(oldLevel);
-    UiManager.instance.victoryScreen.SetActive(false);
+    if (oldLevel != null) Destroy(oldLevel);
+    UiManager.instance?.victoryScreen.SetActive(false);
     nextSingleColor = 0;
     availableSingleColors.Clear();
     nextDualColor = 0;

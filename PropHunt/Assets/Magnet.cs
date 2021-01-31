@@ -13,8 +13,8 @@ public class Magnet : MonoBehaviour {
   float origVolume;
   float stopAfter = 0.2f;
 
-  List<GameObject> reds = new List<GameObject>();
-  List<GameObject> blues = new List<GameObject>();
+  List<Magnetizable> magnetizables = new List<Magnetizable>();
+  // List<GameObject> blues = new List<GameObject>();
   
   void Awake() {
     instance = this;
@@ -24,8 +24,8 @@ public class Magnet : MonoBehaviour {
     origVolume = magnetSound.volume;
     for (int i = 0; i < transform.childCount; ++i) {
       GameObject obj = transform.GetChild(i).gameObject;
-      if (obj.name.StartsWith("Blue")) blues.Add(obj);
-      if (obj.name.StartsWith("Red")) reds.Add(obj);
+      var mag = obj.GetComponent<Magnetizable>();
+      if (mag != null) magnetizables.Add(mag);
     }
   }
 
@@ -33,23 +33,35 @@ public class Magnet : MonoBehaviour {
     currentColor = id;
   }
 
+  void SetLayerRecursively(GameObject obj, int newLayer) {
+    if (null == obj) {
+      return;
+    }
+
+    obj.layer = newLayer;
+
+    foreach (Transform child in obj.transform) {
+      if (null == child) {
+        continue;
+      }
+      SetLayerRecursively(child.gameObject, newLayer);
+    }
+  }
+
   void FixedUpdate() {
-    foreach (var obj in reds) {
+    foreach (var mag in magnetizables) {
+      GameObject obj = mag.gameObject;
       obj.GetComponent<Rigidbody>().useGravity = true;
       obj.GetComponent<Rigidbody>().isKinematic = false;
-      obj.layer = 0;
-    }
-    foreach (var obj in blues) {
-      obj.GetComponent<Rigidbody>().useGravity = true;
-      obj.GetComponent<Rigidbody>().isKinematic = false;
-      obj.layer = 0;
+      SetLayerRecursively(obj, 0);
     }
 
-    List<GameObject> toPull = null;
-    if (currentColor == 1) toPull = reds;
-    if (currentColor == 0) toPull = blues;
+    List<GameObject> toPull = new List<GameObject>();
+    foreach (var mag in magnetizables) {
+      if (mag.HasColor(currentColor)) toPull.Add(mag.gameObject);
+    }
 
-    if (toPull == null) {
+    if (toPull.Count == 0) {
       stopAfter -= Time.fixedDeltaTime;
       magnetSound.volume *= 0.9f;
       if (stopAfter < 0) magnetSound.Stop();
@@ -63,13 +75,15 @@ public class Magnet : MonoBehaviour {
     }
     stopAfter = 0.2f;
     foreach (GameObject obj in toPull) {
-      obj.layer = 8;
+      // obj.layer = 8;
+      SetLayerRecursively(obj, 8);
       var rb = obj.GetComponent<Rigidbody>();
       rb.isKinematic = false;
       rb.useGravity = false;
       var source = player.transform.position + yOffset * Vector3.up;
-      var dir = (source - obj.transform.position).normalized;
-      float dist = (source - obj.transform.position).magnitude;
+      var target = obj.GetComponent<Magnetizable>().ClosestPoint(source);
+      var dir = (source - target).normalized;
+      float dist = (source - target).magnitude;
       if (dist < 3) {
         // rb.isKinematic = true;
       } else {
