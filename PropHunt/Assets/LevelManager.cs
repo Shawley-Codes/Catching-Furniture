@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour {
 
   public bool cheatNext = false;
   void CheckObjectives() {
+    UiManager.instance.UpdateCount(collected, toCollect.Length);
     if (targetObject == null) return;
     if (inZone.Contains(targetObject) || cheatNext) {
       if (inZone.Count == 1 || cheatNext) {
@@ -60,14 +61,15 @@ public class LevelManager : MonoBehaviour {
           NextCollectible();
         } else {
           // Debug.Log("Release highlighted object");
-          UiManager.instance.setObjective("Let highlighted object settle on the floor");
+          UiManager.instance.setObjective("Let the " + targetObject.name + " settle on the floor");
         }
       } else {
-        UiManager.instance.setObjective("Remove Non-Highlighed Objects");
+        UiManager.instance.setObjective("Remove other objects from the designated area");
         // Debug.Log("Push non-highlighted objects outside the room.");
       }
     } else {
-      UiManager.instance.setObjective("Bring Highlighted Object");
+      
+      UiManager.instance.setObjective("Bring the " + targetObject.name + " to the designated area");
       // Debug.Log("Push highlighted object into the room.");
     }
     cheatNext = false;
