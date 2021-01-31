@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8714474570655144357}
   - component: {fileID: 3306087084169566881}
   - component: {fileID: 4052503208722185672}
+  - component: {fileID: 155252085190776400}
   m_Layer: 0
   m_Name: Magnetizable
   m_TagString: Untagged
@@ -45,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 155252085190776400}
 --- !u!114 &3306087084169566881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,3 +75,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &155252085190776400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074279915247379059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe91dc294731a9428c0941ea7579110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  complexMaskingEnabled: 0
+  drawingMode: 1
+  outlineLayer: 0
+  outlineTargets: []
+  renderStyle: 1
+  outlineParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  backParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []
+  frontParameters:
+    enabled: 1
+    color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    dilateShift: 1
+    blurShift: 1
+    fillPass:
+      shader: {fileID: 0}
+      serializedProperties: []

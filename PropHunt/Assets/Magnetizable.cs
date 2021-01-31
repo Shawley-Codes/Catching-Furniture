@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Magnetizable : MonoBehaviour {
+  public MonoBehaviour outlinable;
   List<int> colors;
 
   public Vector3 ClosestPoint(Vector3 source) {
@@ -16,12 +17,21 @@ public class Magnetizable : MonoBehaviour {
     return sum / cnt;
   }
 
+  //[ExecuteInEditMode]
+  //void Awake() {
+  //  foreach (var renderer in GetComponentsInChildren<MeshRenderer>()) {
+  //    renderer.gameObject.AddComponent<EPOOutline.Outlinable>();
+  //  }
+  //}
+
   // Start is called before the first frame update
   void Start() {
     var renderers = new List<MeshRenderer>();
 
     foreach (var renderer in GetComponentsInChildren<MeshRenderer>()) {
       renderers.Add(renderer);
+      var o = renderer.gameObject.AddComponent<EPOOutline.Outlinable>();
+      o.OutlineTargets.Add(new EPOOutline.OutlineTarget(renderer));
     }
     colors = LevelManager.instance.AssignColor(renderers.Count);
     if (colors == null || colors.Count != renderers.Count) {
@@ -37,5 +47,11 @@ public class Magnetizable : MonoBehaviour {
     if (colors == null) return false;
     foreach (var c in colors) if (id == c) return true;
     return false;
+  }
+
+  public void SetHighlight(bool on) {
+    foreach (var o in GetComponentsInChildren<EPOOutline.Outlinable>()) {
+      o.enabled = on;
+    }
   }
 }
