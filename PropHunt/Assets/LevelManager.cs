@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour {
 
   public bool cheatNext = false;
   void CheckObjectives() {
-    UiManager.instance.UpdateCount(collected, toCollect.Length);
+    UiManager.instance?.UpdateCount(collected, toCollect.Length);
     if (targetObject == null) return;
     if (inZone.Contains(targetObject) || cheatNext) {
       if (inZone.Count == 1 || cheatNext) {
@@ -154,7 +154,12 @@ public class LevelManager : MonoBehaviour {
     // Shuffle(availableSingleColors);
     // Shuffle(availableDualColors);
     var magnetizables = new List<GameObject>();
-    foreach (var mag in Magnet.instance.gameObject.GetComponentsInChildren<Magnetizable>()) {
+    var children = new List<Magnetizable>();
+    foreach (var c in Magnet.instance.gameObject.GetComponentsInChildren<Magnetizable>()) {
+      children.Add(c);
+    }
+    Shuffle(children);
+    foreach (var mag in children) {
       mag.Init();
       if (mag.gameObject.activeInHierarchy) {
         magnetizables.Add(mag.gameObject);
