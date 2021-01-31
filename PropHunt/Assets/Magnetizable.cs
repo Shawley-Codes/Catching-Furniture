@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Magnetizable : MonoBehaviour {
   public MonoBehaviour outlinable;
-  List<int> colors;
+  public List<int> colors;
+  bool outline = false;
+  bool initialized = false;
 
   public Vector3 ClosestPoint(Vector3 source) {
     Vector3 sum = Vector3.zero; ;
@@ -26,14 +28,22 @@ public class Magnetizable : MonoBehaviour {
 
   // Start is called before the first frame update
   void Start() {
+    Init();
+  }
+
+  public void Init() {
+    if (initialized) return;
+    initialized = true;
     var renderers = new List<MeshRenderer>();
 
     foreach (var renderer in GetComponentsInChildren<MeshRenderer>()) {
       renderers.Add(renderer);
       var o = renderer.gameObject.AddComponent<EPOOutline.Outlinable>();
       o.OutlineTargets.Add(new EPOOutline.OutlineTarget(renderer));
+      o.enabled = outline;
     }
     colors = LevelManager.instance.AssignColor(renderers.Count);
+    if (colors != null) Debug.Log(colors.Count);
     if (colors == null || colors.Count != renderers.Count) {
       gameObject.SetActive(false);
       return;
@@ -42,7 +52,6 @@ public class Magnetizable : MonoBehaviour {
       renderers[i].material = LevelManager.instance.gameColors[colors[i]].solidMaterial;
     }
   }
-
   public bool HasColor(int id) {
     if (colors == null) return false;
     foreach (var c in colors) if (id == c) return true;
@@ -50,6 +59,7 @@ public class Magnetizable : MonoBehaviour {
   }
 
   public void SetHighlight(bool on) {
+    outline = on;
     foreach (var o in GetComponentsInChildren<EPOOutline.Outlinable>()) {
       o.enabled = on;
     }

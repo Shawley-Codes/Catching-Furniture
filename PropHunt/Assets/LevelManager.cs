@@ -23,88 +23,75 @@ public class LevelManager : MonoBehaviour {
   int nextDualColor = 0;
   List<List<int>> availableTripleColors = new List<List<int>>();
   int nextTripleColor = 0;
-  public int Collected = 0;
-  public int numToCollect = 3;
+  public int collected = 0;
+  public int desiredNumToCollect = 3;
+  public GameObject[] toCollect;
   HashSet<GameObject> inZone = new HashSet<GameObject>();
+  GameObject targetObject = null;
 
   void Awake() {
     instance = this;
     templatePrefab.SetActive(false);
-    RestartLevel();
-        // currentLevel = Instantiate(templatePrefab
-    // setNewCollectable();
-    }
 
+    // currentLevel = Instantiate(templatePrefab
+    // setNewCollectable();
+    RestartLevel();
+    Debug.Log("LevelManager Awake");
+  }
+
+  void Start() {
+
+  }
+
+  void CheckObjectives() {
+    if (inZone.Contains(targetObject)) {
+      if (inZone.Count == 1) {
+        collected++;
+        Debug.Log("Collected " + collected + " / " + toCollect.Length);
+        if (collected >= toCollect.Length) {
+          UiManager.instance.ShowVictory();
+        } else {
+          SetCollectibles();
+        }
+      } else {
+        Debug.Log("Push non-highlighted objects outside the room.");
+      }
+    } else {
+      Debug.Log("Push highlighted object into the room.");
+    }
+  }
+
+  Magnetizable GetMagnetizable(GameObject obj) {
+    var mag = obj.GetComponent<Magnetizable>();
+    if (mag != null) return mag;
+    if (obj.transform.parent == null) return null;
+    return GetMagnetizable(obj.transform.parent.gameObject);
+  }
   //check is object has tag
   private void OnTriggerEnter(Collider collider) {
-    Debug.Log("Enter", collider.gameObject);
-    if (collider.gameObject.GetComponent<Magnetizable>() != null) {
-      inZone.Add(collider.gameObject);
-    }
-
-    //if item is a collectable, increment and set new collectable.
-    if (collider.gameObject.tag == "Collectable")
-    {
-            if (inZone.Count < 2) {
-                Collected++;
-                SetCollectibles();
-                //TBD: needs to set ui with collectable count
-                //
-            }
-    }
-    //win if 3 collectables arem collected
-    if (Collected >= 3)
-    {
-       UiManager.instance.ShowVictory();
-    }
+    // Debug.Log("Enter", collider.gameObject);
+    var mag = GetMagnetizable(collider.gameObject);
+    if (mag != null) inZone.Add(mag.gameObject);
+    CheckObjectives();
   }
 
   //check is object has tag
   private void OnTriggerExit(Collider collider) {
-    Debug.Log("Exit", collider.gameObject);
-    if (collider.gameObject.GetComponent<Magnetizable>() != null) {
-      inZone.Remove(collider.gameObject);
-    }
-    //check if there is less than 2 and then if one is collectable
-    if (inZone.Count < 2)
-    {
-        //if (inZone.First.tag == "Collectable")
-        //{
-        //    Collected++;
-        //    SetCollectibles();
-            //TBD: needs to set ui with collectable count
-            //TBD: remove item from array
-        //}
-            
-    }
-    if (Collected >= 3)
-    {
-        UiManager.instance.ShowVictory();
-    }
-    }
-    //called when a new collectable object needs to be set
-    //TBD: needs to also set ui with new object
-  public void SetCollectibles() {
-    var magnetizables = new List<GameObject>();
-    foreach (var mag in Magnet.instance.gameObject.GetComponentsInChildren<Magnetizable>()) {
-      magnetizables.Add(mag.gameObject);
-    }
-    Debug.Log("Total: " + magnetizables.Count + " magnetizables");
-        //Shuffle(magnetizables);
-    int rand = Random.Range(0, magnetizables.Count-1);
-    setCurrentCollectable(magnetizables[rand]);
-    //for (int i = 0; i < numToCollect && i < magnetizables.Count; ++i) {
-      // var taggable = magnetizables[i].GetComponent<Tags>();
-      // if (taggable != null) { taggable.setCurrentCollectable(); }
-    //}
+    // Debug.Log("Exit", collider.gameObject);
+    var mag = GetMagnetizable(collider.gameObject);
+    if (mag != null) inZone.Remove(mag.gameObject);
+    CheckObjectives();
   }
 
-    private void setCurrentCollectable(GameObject gameObject)
-    {
-        gameObject.tag = "Collectable";
-    }
+  //called when a new collectable object needs to be set
+  //TBD: needs to also set ui with new object
+  public void SetCollectibles() {
+    targetObject?.GetComponent<Magnetizable>()?.SetHighlight(false);
+    targetObject = toCollect[collected];
+    targetObject.GetComponent<Magnetizable>()?.SetHighlight(true);
+  }
 
-    void Shuffle<T>(List<T> v) {
+  void Shuffle<T>(List<T> v) {
     for (int i = 0; i < v.Count; i++) {
       T temp = v[i];
       int j = Random.Range(i, v.Count);
@@ -120,7 +107,6 @@ public class LevelManager : MonoBehaviour {
     if (oldLevel != null) Destroy(oldLevel);
     UiManager.instance?.victoryScreen.SetActive(false);
     inZone.Clear();
-    SetCollectibles();
     nextSingleColor = 0;
     availableSingleColors.Clear();
     nextDualColor = 0;
@@ -136,6 +122,7 @@ public class LevelManager : MonoBehaviour {
         dual.Add(i);
         dual.Add(j);
         availableDualColors.Add(dual);
+        Debug.Log(availableDualColors.Count);
         for (int k = j + 1; k < gameColors.Length; ++k) {
           var triple = new List<int>();
           triple.Add(i);
@@ -147,8 +134,24 @@ public class LevelManager : MonoBehaviour {
     }
     // Shuffle(availableSingleColors);
     // Shuffle(availableDualColors);
+    var magnetizables = new List<GameObject>();
+    foreach (var mag in Magnet.instance.gameObject.GetComponentsInChildren<Magnetizable>()) {
+      mag.Init();
+      if (mag.gameObject.activeInHierarchy) {
+        magnetizables.Add(mag.gameObject);
+      }
+    }
+    Debug.Log("Total: " + magnetizables.Count + " magnetizables");
+    Shuffle(magnetizables);
+    int cnt = Math.Min(desiredNumToCollect, magnetizables.Count);
+    toCollect = new GameObject[cnt];
+    for (int i = 0; i < cnt; ++i) {
+      toCollect[i] = magnetizables[i];
+    }
+    collected = 0;
+    SetCollectibles();
   }
-  
+
   public List<int> AssignSingleColor() {
     if (nextSingleColor >= availableSingleColors.Count) return null;
     var col = availableSingleColors[nextSingleColor];

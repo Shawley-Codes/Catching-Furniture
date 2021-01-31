@@ -11,7 +11,7 @@ public class Collectable : MonoBehaviour
         //Check to see if the tag on the collider is equal to Enemy
         if (other.tag == "Player")
         {
-            LM.Collected += 1;
+            // LM.Collected += 1;
         }
         Destroy(this.gameObject);
     }

@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &105829202
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &493663188 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8707319701435711148, guid: b85efbf819accf64ab716983e0b85977,
@@ -613,6 +617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &537946113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1038,38 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &929658628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3222709336968379437, guid: b85efbf819accf64ab716983e0b85977,
+    type: 3}
+  m_PrefabInstance: {fileID: 8707319701956948956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &929658630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929658628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb42831ee5422f409e7f24f9e7488ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stage: 1
+  renderingStrategy: 0
+  renderTargetName: 
+  renderingMode: 0
+  outlineLayerMask: -1
+  scaleIndepented: 1
+  primaryRendererScale: 0.75
+  blurShift: 1
+  dilateShift: 2
+  dilateIterations: 1
+  dilateQuality: 2
+  blurIterations: 1
+  blurType: 4
+  infoRendererScale: 0.75
 --- !u!1 &933289878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,6 +1258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &1058001097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,6 +1446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &1448703614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1458,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1448703616}
   - component: {fileID: 1448703615}
+  - component: {fileID: 1448703617}
   m_Layer: 0
   m_Name: Level Manager
   m_TagString: Untagged
@@ -1449,8 +1492,9 @@ MonoBehaviour:
     transparentMaterial: {fileID: 2100000, guid: 1d96de9bd3b7a744e94f59cd7650c53b,
       type: 2}
     name: Green
-  Collected: 0
-  numToCollect: 3
+  collected: 0
+  desiredNumToCollect: 3
+  toCollect: []
 --- !u!4 &1448703616
 Transform:
   m_ObjectHideFlags: 0
@@ -1465,6 +1509,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1448703617
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448703614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 19.493948, y: 8.930389, z: 20.057598}
+  m_Center: {x: -6.28193, y: -9.982273, z: -7.007616}
 --- !u!1 &1524206682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,6 +1638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1001 &1663436419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1728,6 +1787,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &1802143849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,6 +1883,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &1818617518 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8707319701994704346, guid: b85efbf819accf64ab716983e0b85977,
@@ -1840,6 +1903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c26a0e72eab97e4aa2b25f164d820fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlinable: {fileID: 0}
+  colors: 
 --- !u!1 &2021616249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2121,6 +2186,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -5.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975128174533926654, guid: b85efbf819accf64ab716983e0b85977,
+        type: 3}
+      propertyPath: m_ForceIntoRT
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7437116991875407845, guid: b85efbf819accf64ab716983e0b85977,
         type: 3}

@@ -24,8 +24,10 @@ public class Magnet : MonoBehaviour {
     origVolume = magnetSound.volume;
     for (int i = 0; i < transform.childCount; ++i) {
       GameObject obj = transform.GetChild(i).gameObject;
-      var mag = obj.GetComponent<Magnetizable>();
-      if (mag != null) magnetizables.Add(mag);
+      if (obj.activeInHierarchy) {
+        var mag = obj.GetComponent<Magnetizable>();
+        if (mag != null) magnetizables.Add(mag);
+      }
     }
   }
 
