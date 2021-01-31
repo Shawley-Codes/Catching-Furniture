@@ -21,12 +21,45 @@ public class LevelManager : MonoBehaviour {
   int nextDualColor = 0;
   List<List<int>> availableTripleColors = new List<List<int>>();
   int nextTripleColor = 0;
+  public int Collected = 0;
 
   void Awake() {
     instance = this;
     templatePrefab.SetActive(false);
     RestartLevel();
     // currentLevel = Instantiate(templatePrefab
+  }
+
+  //check is object has tag
+  private void OnTriggerEnter(Collider collider)
+  {
+    Debug.Log("Collide", collider.gameObject);
+    //if item is a collectable, increment and set new collectable.
+    if (collider.gameObject.tag == "Collectable")
+    {
+       Collected++;
+       setNewCollectable();
+       //TBD: needs to set ui with collectable count
+    }
+    //win if 3 collectables arem collected
+    if (Collected >= 3)
+    {
+       UiManager.instance.ShowVictory();
+    }
+  }
+
+
+    //called when a new collectable object needs to be set
+    //TBD: needs to also set ui with new object
+  public void setNewCollectable()
+  {
+    int maxobj = transform.childCount;
+    int rand = Random.Range(0, maxobj);
+    GameObject obj = transform.GetChild(rand).gameObject;
+    var taggable = obj.GetComponent<Tags>();
+    if(taggable != null) {taggable.setCurrentCollectable();}
+    //recurse until an object can be tagged withg current collectable has been found
+    else { setNewCollectable(); }
   }
 
   void Shuffle<T>(List<T> v) {
