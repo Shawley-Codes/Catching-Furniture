@@ -7,6 +7,7 @@ using System;
 public class UiManager : MonoBehaviour {
     public GameObject overlay;
     public GameObject victoryScreen;
+    public GameObject pauseMenu;
     public TMP_Text count;
     public TMP_Text objective;
     public static UiManager instance;
@@ -15,6 +16,7 @@ public class UiManager : MonoBehaviour {
         instance = this;
         overlay.SetActive(true);
         victoryScreen.SetActive(false);
+        pauseMenu.SetActive(false);
     }
 
     public void ShowVictory() {
@@ -30,4 +32,28 @@ public class UiManager : MonoBehaviour {
         //change tmp to provided string
         objective.text = newObj;
     }
+
+
+    //check for puase button
+    void Update()
+    {
+
+        //click escape to change time scale
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+                pauseMenu.SetActive(true);
+            }
+            else if (Time.timeScale == 0)
+            {
+                Debug.Log("high");
+                Time.timeScale = 1;
+                pauseMenu.SetActive(false);
+            }
+        }
+    }
+
+
 }
