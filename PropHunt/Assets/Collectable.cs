@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    public GameTracker GT;
+    public LevelManager LM;
 
     private void OnTriggerEnter(Collider other)
     {
         //Check to see if the tag on the collider is equal to Enemy
         if (other.tag == "Player")
         {
-            GT.Collected += 1;
+            LM.Collected += 1;
         }
         Destroy(this.gameObject);
     }
-
 }
