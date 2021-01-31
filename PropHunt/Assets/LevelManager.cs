@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class GameColor {
@@ -39,19 +41,22 @@ public class LevelManager : MonoBehaviour {
     if (collider.gameObject.GetComponent<Magnetizable>() != null) {
       inZone.Add(collider.gameObject);
     }
-    //Debug.Log("Collide", collider.gameObject);
-    ////if item is a collectable, increment and set new collectable.
-    //if (collider.gameObject.tag == "Collectable")
-    //{
-    //   Collected++;
-    //   setNewCollectable();
-    //   //TBD: needs to set ui with collectable count
-    //}
-    ////win if 3 collectables arem collected
-    //if (Collected >= 3)
-    //{
-    //   UiManager.instance.ShowVictory();
-    //}
+
+    //if item is a collectable, increment and set new collectable.
+    if (collider.gameObject.tag == "Collectable")
+    {
+            if (inZone.Count < 2) {
+                Collected++;
+                SetCollectibles();
+                //TBD: needs to set ui with collectable count
+                //
+            }
+    }
+    //win if 3 collectables arem collected
+    if (Collected >= 3)
+    {
+       UiManager.instance.ShowVictory();
+    }
   }
 
   //check is object has tag
@@ -60,7 +65,23 @@ public class LevelManager : MonoBehaviour {
     if (collider.gameObject.GetComponent<Magnetizable>() != null) {
       inZone.Remove(collider.gameObject);
     }
-  }
+    //check if there is less than 2 and then if one is collectable
+    if (inZone.Count < 2)
+    {
+        //if (inZone.First.tag == "Collectable")
+        //{
+        //    Collected++;
+        //    SetCollectibles();
+            //TBD: needs to set ui with collectable count
+            //TBD: remove item from array
+        //}
+            
+    }
+    if (Collected >= 3)
+    {
+        UiManager.instance.ShowVictory();
+    }
+    }
     //called when a new collectable object needs to be set
     //TBD: needs to also set ui with new object
   public void SetCollectibles() {
@@ -69,14 +90,21 @@ public class LevelManager : MonoBehaviour {
       magnetizables.Add(mag.gameObject);
     }
     Debug.Log("Total: " + magnetizables.Count + " magnetizables");
-    Shuffle(magnetizables);
-    for (int i = 0; i < numToCollect && i < magnetizables.Count; ++i) {
+        //Shuffle(magnetizables);
+    int rand = Random.Range(0, magnetizables.Count-1);
+    setCurrentCollectable(magnetizables[rand]);
+    //for (int i = 0; i < numToCollect && i < magnetizables.Count; ++i) {
       // var taggable = magnetizables[i].GetComponent<Tags>();
       // if (taggable != null) { taggable.setCurrentCollectable(); }
-    }
+    //}
   }
 
-  void Shuffle<T>(List<T> v) {
+    private void setCurrentCollectable(GameObject gameObject)
+    {
+        gameObject.tag = "Collectable";
+    }
+
+    void Shuffle<T>(List<T> v) {
     for (int i = 0; i < v.Count; i++) {
       T temp = v[i];
       int j = Random.Range(i, v.Count);
