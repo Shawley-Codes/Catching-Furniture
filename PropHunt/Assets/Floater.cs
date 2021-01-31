@@ -7,9 +7,22 @@ public class Floater : MonoBehaviour {
   void Awake() {
     rb = GetComponent<Rigidbody>();
   }
+  void SetLayerRecursively(GameObject obj, int newLayer) {
+    if (null == obj) {
+      return;
+    }
 
+    obj.layer = newLayer;
+
+    foreach (Transform child in obj.transform) {
+      if (null == child) {
+        continue;
+      }
+      SetLayerRecursively(child.gameObject, newLayer);
+    }
+  }
   void FixedUpdate() {
-    gameObject.layer = 0;
-    if (rb.velocity.magnitude > 1) gameObject.layer = 8;
+    SetLayerRecursively(gameObject, 0);
+    if (rb.velocity.magnitude > 1) SetLayerRecursively(gameObject, 8);
   }
 }
