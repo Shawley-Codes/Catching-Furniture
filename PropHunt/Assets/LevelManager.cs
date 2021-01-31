@@ -33,7 +33,6 @@ public class LevelManager : MonoBehaviour {
   void Awake() {
     instance = this;
     templatePrefab.SetActive(false);
-
     // currentLevel = Instantiate(templatePrefab
     // setNewCollectable();
     RestartLevel();
@@ -53,17 +52,22 @@ public class LevelManager : MonoBehaviour {
           collected++;
           collectSound.Play();
           Debug.Log("Collected " + collected + " / " + toCollect.Length);
+          UiManager.instance.UpdateCount(collected);
           if (collected >= toCollect.Length) {
+            UiManager.instance.setObjective("You Won");
             UiManager.instance.ShowVictory();
           }
           NextCollectible();
         } else {
           Debug.Log("Release highlighted object");
+          UiManager.instance.setObjective("Let highlighted object settle on the floor.");
         }
       } else {
+        UiManager.instance.setObjective("Remove Non-Highlighed Objects");
         Debug.Log("Push non-highlighted objects outside the room.");
       }
     } else {
+      UiManager.instance.setObjective("Bring Highlighted Object");
       Debug.Log("Push highlighted object into the room.");
     }
     cheatNext = false;
