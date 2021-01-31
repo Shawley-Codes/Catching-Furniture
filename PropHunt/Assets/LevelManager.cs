@@ -15,6 +15,7 @@ public class GameColor {
 public class LevelManager : MonoBehaviour {
   public static LevelManager instance;
   public GameObject templatePrefab;
+  public AudioSource collectSound;
   GameObject currentLevel;
   public GameColor[] gameColors;
   List<List<int>> availableSingleColors = new List<List<int>>();
@@ -43,15 +44,21 @@ public class LevelManager : MonoBehaviour {
 
   }
 
+  public bool cheatNext = false;
   void CheckObjectives() {
-    if (inZone.Contains(targetObject)) {
-      if (inZone.Count == 1) {
-        collected++;
-        Debug.Log("Collected " + collected + " / " + toCollect.Length);
-        if (collected >= toCollect.Length) {
-          UiManager.instance.ShowVictory();
+    if (targetObject == null) return;
+    if (inZone.Contains(targetObject) || cheatNext) {
+      if (inZone.Count == 1 || cheatNext) {
+        if (targetObject.GetComponent<Rigidbody>().velocity.magnitude < 0.1 || cheatNext) {
+          collected++;
+          collectSound.Play();
+          Debug.Log("Collected " + collected + " / " + toCollect.Length);
+          if (collected >= toCollect.Length) {
+            UiManager.instance.ShowVictory();
+          }
+          NextCollectible();
         } else {
-          SetCollectibles();
+          Debug.Log("Release highlighted object");
         }
       } else {
         Debug.Log("Push non-highlighted objects outside the room.");
@@ -59,6 +66,11 @@ public class LevelManager : MonoBehaviour {
     } else {
       Debug.Log("Push highlighted object into the room.");
     }
+    cheatNext = false;
+  }
+
+  void FixedUpdate() {
+    CheckObjectives();
   }
 
   Magnetizable GetMagnetizable(GameObject obj) {
@@ -83,12 +95,14 @@ public class LevelManager : MonoBehaviour {
     CheckObjectives();
   }
 
-  //called when a new collectable object needs to be set
-  //TBD: needs to also set ui with new object
-  public void SetCollectibles() {
+  public void NextCollectible() {
     targetObject?.GetComponent<Magnetizable>()?.SetHighlight(false);
-    targetObject = toCollect[collected];
-    targetObject.GetComponent<Magnetizable>()?.SetHighlight(true);
+    if (collected < toCollect.Length) {
+      targetObject = toCollect[collected];
+    } else {
+      targetObject = null;
+    }
+    targetObject?.GetComponent<Magnetizable>()?.SetHighlight(true);
   }
 
   void Shuffle<T>(List<T> v) {
@@ -122,7 +136,6 @@ public class LevelManager : MonoBehaviour {
         dual.Add(i);
         dual.Add(j);
         availableDualColors.Add(dual);
-        Debug.Log(availableDualColors.Count);
         for (int k = j + 1; k < gameColors.Length; ++k) {
           var triple = new List<int>();
           triple.Add(i);
@@ -149,7 +162,7 @@ public class LevelManager : MonoBehaviour {
       toCollect[i] = magnetizables[i];
     }
     collected = 0;
-    SetCollectibles();
+    NextCollectible();
   }
 
   public List<int> AssignSingleColor() {
