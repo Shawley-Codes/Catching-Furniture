@@ -27,8 +27,9 @@ public class LevelManager : MonoBehaviour {
     instance = this;
     templatePrefab.SetActive(false);
     RestartLevel();
-    // currentLevel = Instantiate(templatePrefab
-  }
+        // currentLevel = Instantiate(templatePrefab
+    setNewCollectable();
+    }
 
   //check is object has tag
   private void OnTriggerEnter(Collider collider)
@@ -53,9 +54,13 @@ public class LevelManager : MonoBehaviour {
     //TBD: needs to also set ui with new object
   public void setNewCollectable()
   {
+        //three lines here up for replace
     int maxobj = transform.childCount;
     int rand = Random.Range(0, maxobj);
     GameObject obj = transform.GetChild(rand).gameObject;
+    
+        //TBD: need new method to get list of possible options for collectable choice
+
     var taggable = obj.GetComponent<Tags>();
     if(taggable != null) {taggable.setCurrentCollectable();}
     //recurse until an object can be tagged withg current collectable has been found
