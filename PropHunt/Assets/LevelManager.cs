@@ -37,7 +37,6 @@ public class LevelManager : MonoBehaviour {
     // currentLevel = Instantiate(templatePrefab
     // setNewCollectable();
     RestartLevel();
-    Debug.Log("LevelManager Awake");
   }
 
   void Start() {
