@@ -29,8 +29,9 @@ public class LevelManager : MonoBehaviour {
     instance = this;
     templatePrefab.SetActive(false);
     RestartLevel();
-    // currentLevel = Instantiate(templatePrefab
-  }
+        // currentLevel = Instantiate(templatePrefab
+    setNewCollectable();
+    }
 
   //check is object has tag
   private void OnTriggerEnter(Collider collider) {
