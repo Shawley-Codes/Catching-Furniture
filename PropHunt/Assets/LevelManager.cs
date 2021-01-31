@@ -15,6 +15,7 @@ public class GameColor {
 public class LevelManager : MonoBehaviour {
   public static LevelManager instance;
   public GameObject templatePrefab;
+  public GameObject soulPrefab;
   public AudioSource collectSound;
   GameObject currentLevel;
   public GameColor[] gameColors;
@@ -50,6 +51,13 @@ public class LevelManager : MonoBehaviour {
     if (inZone.Contains(targetObject) || cheatNext) {
       if (inZone.Count == 1 || cheatNext) {
         if (targetObject.GetComponent<Rigidbody>().velocity.magnitude < 0.1 || cheatNext) {
+          if (soulPrefab != null) {
+            var soul = Instantiate(
+              soulPrefab,
+              targetObject.GetComponent<Magnetizable>().Center(),
+              Quaternion.identity);
+            Destroy(soul, 3f);
+          }
           collected++;
           collectSound.Play();
           // Debug.Log("Collected " + collected + " / " + toCollect.Length);

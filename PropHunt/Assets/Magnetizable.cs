@@ -18,7 +18,16 @@ public class Magnetizable : MonoBehaviour {
     if (cnt == 0) return source;
     return sum / cnt;
   }
-
+  public Vector3 Center() {
+    Vector3 sum = Vector3.zero;
+    int cnt = 0;
+    foreach (var coll in GetComponentsInChildren<Collider>()) {
+      sum += coll.bounds.center;
+      ++cnt;
+    }
+    if (cnt == 0) return Vector3.zero;
+    return sum / cnt;
+  }
   //[ExecuteInEditMode]
   //void Awake() {
   //  foreach (var renderer in GetComponentsInChildren<MeshRenderer>()) {
