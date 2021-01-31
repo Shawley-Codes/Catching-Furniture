@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour {
     templatePrefab.SetActive(false);
     RestartLevel();
         // currentLevel = Instantiate(templatePrefab
-    setNewCollectable();
+    // setNewCollectable();
     }
 
   //check is object has tag
