@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
+using System;
 
 public class UiManager : MonoBehaviour {
     public GameObject overlay;
     public GameObject victoryScreen;
-    public Text count;
-    public Text objective;
+    public TMP_Text count;
+    public TMP_Text objective;
     public static UiManager instance;
 
     void Awake() {
@@ -21,11 +22,13 @@ public class UiManager : MonoBehaviour {
     }
 
     public void UpdateCount(int collected){
+        //change tmp to provided int
         count.text = collected.ToString();
     }
 
-    public void setObjective(GameObject newItem)
+    public void setObjective(String newObj)
     {
-        objective.text = newItem.name;
+        //change tmp to provided string
+        objective.text = newObj;
     }
 }
