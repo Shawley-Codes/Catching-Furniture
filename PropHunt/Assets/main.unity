@@ -181,7 +181,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8707319701956948956}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &127174903
+--- !u!136 &127174906
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2204,7 +2204,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e3c90cfac2457c943b02b6deca3b5db3, type: 2}
+  - {fileID: 2100000, guid: 96143c98271e77e40b9ad54c36af7286, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4250,6 +4250,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -5.58
       objectReference: {fileID: 0}
+    - target: {fileID: 6842339673372751322, guid: b85efbf819accf64ab716983e0b85977,
+        type: 3}
+      propertyPath: m_Name
+      value: Dinning Table
+      objectReference: {fileID: 0}
     - target: {fileID: 6975128174533926654, guid: b85efbf819accf64ab716983e0b85977,
         type: 3}
       propertyPath: field of view
@@ -4579,6 +4584,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -22.609001
+      objectReference: {fileID: 0}
+    - target: {fileID: 9113419693013377618, guid: b85efbf819accf64ab716983e0b85977,
+        type: 3}
+      propertyPath: m_Name
+      value: Candle Stick
       objectReference: {fileID: 0}
     - target: {fileID: 9184694004643336956, guid: b85efbf819accf64ab716983e0b85977,
         type: 3}
